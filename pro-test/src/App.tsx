@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { t } from './i18n';
 import dashboardFallback from './assets/worldmonitor-7-mar-2026.jpg';
+import wiredLogo from './assets/wired-logo.svg';
 
 const API_BASE = location.hostname === 'localhost' ? 'https://api.worldmonitor.app' : '/api';
 const TURNSTILE_SITE_KEY = '0x4AAAAAACnaYgHIyxclu8Tj';
@@ -276,7 +277,7 @@ const SocialProof = () => (
         </p>
         <footer className="mt-6 flex items-center justify-center gap-3">
           <a href="https://www.wired.me/story/the-music-streaming-ceo-who-built-a-global-war-map" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-wm-muted hover:text-wm-text transition-colors">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Wired_logo.svg" alt="WIRED" className="h-5 brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
+            <img src={wiredLogo} alt="WIRED" className="h-5 brightness-0 invert opacity-60 hover:opacity-100 transition-opacity" />
           </a>
         </footer>
       </blockquote>
@@ -287,6 +288,7 @@ const SocialProof = () => (
 /* ─── 3. Two-path split (new — from draft) ─── */
 const TwoPathSplit = () => (
   <section className="py-24 px-6 max-w-5xl mx-auto" id="tiers">
+    <h2 className="sr-only">Plans</h2>
     <div className="grid md:grid-cols-2 gap-8">
       <div className="bg-wm-card border border-wm-green p-8 relative border-glow">
         <div className="absolute top-0 left-0 w-full h-1 bg-wm-green" />
@@ -310,7 +312,7 @@ const TwoPathSplit = () => (
         <p className="text-sm text-wm-muted mb-6">{t('twoPath.entDesc')}</p>
         <ul className="space-y-3 mb-8">
           <li className="text-xs font-mono text-wm-green uppercase tracking-wider mb-1">{t('twoPath.entF1')}</li>
-          {[t('twoPath.entF2'), t('twoPath.entF3'), t('twoPath.entF4'), t('twoPath.entF5'), t('twoPath.entF6'), t('twoPath.entF7'), t('twoPath.entF8'), t('twoPath.entF9'), t('twoPath.entF10')].map((f, i) => (
+          {[t('twoPath.entF2'), t('twoPath.entF3'), t('twoPath.entF4'), t('twoPath.entF5'), t('twoPath.entF6'), t('twoPath.entF7'), t('twoPath.entF8'), t('twoPath.entF9'), t('twoPath.entF10'), t('twoPath.entF11')].map((f, i) => (
             <li key={i} className="flex items-start gap-3 text-sm">
               <Check className="w-4 h-4 shrink-0 mt-0.5 text-wm-muted" aria-hidden="true" />
               <span className="text-wm-muted">{f}</span>
@@ -329,7 +331,7 @@ const TwoPathSplit = () => (
 const WhyUpgrade = () => {
   const items = [
     { icon: <Filter className="w-6 h-6" aria-hidden="true" />, title: t('whyUpgrade.noiseTitle'), desc: t('whyUpgrade.noiseDesc') },
-    { icon: <Lightbulb className="w-6 h-6" aria-hidden="true" />, title: t('whyUpgrade.fasterTitle'), desc: t('whyUpgrade.fasterDesc') },
+    { icon: <TrendingUp className="w-6 h-6" aria-hidden="true" />, title: t('whyUpgrade.fasterTitle'), desc: t('whyUpgrade.fasterDesc') },
     { icon: <SlidersHorizontal className="w-6 h-6" aria-hidden="true" />, title: t('whyUpgrade.controlTitle'), desc: t('whyUpgrade.controlDesc') },
     { icon: <Telescope className="w-6 h-6" aria-hidden="true" />, title: t('whyUpgrade.deeperTitle'), desc: t('whyUpgrade.deeperDesc') },
   ];
@@ -411,13 +413,12 @@ const LivePreview = () => (
 /* ─── 6. Source Marquee (current) ─── */
 const SourceMarquee = () => {
   const sources = [
-    "ACLED", "UCDP", "GDELT", "NASA FIRMS", "USGS", "OpenSky", "AISStream",
-    "Finnhub", "FRED", "CoinGecko", "Polymarket", "UNHCR", "Cloudflare Radar",
-    "BGPStream", "GPSJam", "NOAA", "Copernicus", "IAEA", "Bloomberg",
-    "Reuters", "Al Jazeera", "Sky News", "Euronews", "DW News", "France 24",
-    "CNBC", "Nikkei", "Haaretz", "Al Arabiya", "TRT World",
-    "Defense One", "Jane's", "The War Zone", "Maritime Executive",
-    "OilPrice", "Rigzone", "Hellenic Shipping News",
+    "Finnhub", "FRED", "Bloomberg", "CNBC", "Nikkei", "CoinGecko", "Polymarket",
+    "Reuters", "ACLED", "UCDP", "GDELT", "NASA FIRMS", "USGS", "OpenSky", "AISStream",
+    "Cloudflare Radar", "BGPStream", "GPSJam", "NOAA", "Copernicus", "IAEA",
+    "Al Jazeera", "Sky News", "Euronews", "DW News", "France 24",
+    "OilPrice", "Rigzone", "Maritime Executive", "Hellenic Shipping News",
+    "Defense One", "Jane's", "The War Zone",
     "TechCrunch", "Ars Technica", "The Verge", "Wired",
     "Krebs on Security", "BleepingComputer", "The Record",
   ];
@@ -447,37 +448,51 @@ const ProShowcase = () => (
 
         <div className="space-y-6">
           <div className="flex gap-4">
-            <Zap className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
+            <TrendingUp className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
             <div>
-              <h4 className="font-bold mb-1">{t('proShowcase.nearRealTime')}</h4>
-              <p className="text-sm text-wm-muted">{t('proShowcase.nearRealTimeDesc')}</p>
+              <h3 className="font-bold mb-1">{t('proShowcase.equityResearch')}</h3>
+              <p className="text-sm text-wm-muted">{t('proShowcase.equityResearchDesc')}</p>
             </div>
           </div>
           <div className="flex gap-4">
-            <Brain className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
+            <Globe className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
             <div>
-              <h4 className="font-bold mb-1">{t('proShowcase.soWhat')}</h4>
-              <p className="text-sm text-wm-muted">{t('proShowcase.soWhatDesc')}</p>
+              <h3 className="font-bold mb-1">{t('proShowcase.geopoliticalAnalysis')}</h3>
+              <p className="text-sm text-wm-muted">{t('proShowcase.geopoliticalAnalysisDesc')}</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <BarChart3 className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
+            <div>
+              <h3 className="font-bold mb-1">{t('proShowcase.economyAnalytics')}</h3>
+              <p className="text-sm text-wm-muted">{t('proShowcase.economyAnalyticsDesc')}</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <ShieldAlert className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
+            <div>
+              <h3 className="font-bold mb-1">{t('proShowcase.riskMonitoring')}</h3>
+              <p className="text-sm text-wm-muted">{t('proShowcase.riskMonitoringDesc')}</p>
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <Telescope className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
+            <div>
+              <h4 className="font-bold mb-1">{t('proShowcase.orbitalSurveillance')}</h4>
+              <p className="text-sm text-wm-muted">{t('proShowcase.orbitalSurveillanceDesc')}</p>
             </div>
           </div>
           <div className="flex gap-4">
             <Clock className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
             <div>
-              <h4 className="font-bold mb-1">{t('proShowcase.morningBriefs')}</h4>
+              <h3 className="font-bold mb-1">{t('proShowcase.morningBriefs')}</h3>
               <p className="text-sm text-wm-muted">{t('proShowcase.morningBriefsDesc')}</p>
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <Bell className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
-            <div>
-              <h4 className="font-bold mb-1">{t('proShowcase.alerting')}</h4>
-              <p className="text-sm text-wm-muted">{t('proShowcase.alertingDesc')}</p>
             </div>
           </div>
           <div className="flex gap-4">
             <Key className="w-6 h-6 text-wm-green shrink-0" aria-hidden="true" />
             <div>
-              <h4 className="font-bold mb-1">{t('proShowcase.oneKey')}</h4>
+              <h3 className="font-bold mb-1">{t('proShowcase.oneKey')}</h3>
               <p className="text-sm text-wm-muted">{t('proShowcase.oneKeyDesc')}</p>
             </div>
           </div>
@@ -523,9 +538,9 @@ const ProShowcase = () => (
               <p className="text-gray-300 font-bold mb-3">{t('slackMock.morningBrief')} &middot; Mar 6</p>
 
               <div className="space-y-3">
-                <div className="pl-3 border-l-2 border-red-500">
-                  <span className="text-red-400 font-bold text-xs uppercase tracking-wider">{t('slackMock.critical')}</span>
-                  <p className="text-gray-300 mt-1">{t('slackMock.criticalText')}</p>
+                <div className="pl-3 border-l-2 border-blue-500">
+                  <span className="text-blue-400 font-bold text-xs uppercase tracking-wider">{t('slackMock.markets')}</span>
+                  <p className="text-gray-300 mt-1">{t('slackMock.marketsText')}</p>
                 </div>
 
                 <div className="pl-3 border-l-2 border-orange-500">
@@ -550,10 +565,10 @@ const ProShowcase = () => (
 const AudiencePersonas = () => {
   const personas = [
     { icon: <LineChart className="w-6 h-6" aria-hidden="true" />, title: t('audience.investorsTitle'), desc: t('audience.investorsDesc') },
-    { icon: <Search className="w-6 h-6" aria-hidden="true" />, title: t('audience.researchersTitle'), desc: t('audience.researchersDesc') },
-    { icon: <Shield className="w-6 h-6" aria-hidden="true" />, title: t('audience.securityTitle'), desc: t('audience.securityDesc') },
-    { icon: <Landmark className="w-6 h-6" aria-hidden="true" />, title: t('audience.govTitle'), desc: t('audience.govDesc') },
     { icon: <Fuel className="w-6 h-6" aria-hidden="true" />, title: t('audience.tradersTitle'), desc: t('audience.tradersDesc') },
+    { icon: <Search className="w-6 h-6" aria-hidden="true" />, title: t('audience.researchersTitle'), desc: t('audience.researchersDesc') },
+    { icon: <Globe className="w-6 h-6" aria-hidden="true" />, title: t('audience.journalistsTitle'), desc: t('audience.journalistsDesc') },
+    { icon: <Landmark className="w-6 h-6" aria-hidden="true" />, title: t('audience.govTitle'), desc: t('audience.govDesc') },
     { icon: <Building2 className="w-6 h-6" aria-hidden="true" />, title: t('audience.teamsTitle'), desc: t('audience.teamsDesc') },
   ];
 
@@ -667,53 +682,53 @@ const EnterpriseShowcase = () => (
       <div className="grid md:grid-cols-3 gap-6 mb-6">
         <div className="bg-wm-card border border-wm-border p-6">
           <ShieldAlert className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.security')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.security')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.securityDesc')}</p>
         </div>
         <div className="bg-wm-card border border-wm-border p-6">
           <Cpu className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.aiAgents')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.aiAgents')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.aiAgentsDesc')}</p>
         </div>
         <div className="bg-wm-card border border-wm-border p-6">
           <Layers className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.dataLayers')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.dataLayers')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.dataLayersDesc')}</p>
         </div>
       </div>
       <div className="grid md:grid-cols-3 gap-6 mb-12">
         <div className="bg-wm-card border border-wm-border p-6">
           <Plug className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.connectors')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.connectors')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.connectorsDesc')}</p>
         </div>
         <div className="bg-wm-card border border-wm-border p-6">
           <PanelTop className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.whiteLabel')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.whiteLabel')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.whiteLabelDesc')}</p>
         </div>
         <div className="bg-wm-card border border-wm-border p-6">
           <BarChart3 className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-          <h4 className="font-bold mb-2">{t('enterpriseShowcase.financial')}</h4>
+          <h3 className="font-bold mb-2">{t('enterpriseShowcase.financial')}</h3>
           <p className="text-sm text-wm-muted">{t('enterpriseShowcase.financialDesc')}</p>
         </div>
       </div>
 
       <div className="data-grid mb-12">
         <div className="data-cell">
-          <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.commodity')}</h5>
+          <h4 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.commodity')}</h4>
           <p className="text-sm">{t('enterpriseShowcase.commodityDesc')}</p>
         </div>
         <div className="data-cell">
-          <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.government')}</h5>
+          <h4 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.government')}</h4>
           <p className="text-sm">{t('enterpriseShowcase.governmentDesc')}</p>
         </div>
         <div className="data-cell">
-          <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.risk')}</h5>
+          <h4 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.risk')}</h4>
           <p className="text-sm">{t('enterpriseShowcase.riskDesc')}</p>
         </div>
         <div className="data-cell">
-          <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.soc')}</h5>
+          <h4 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.soc')}</h4>
           <p className="text-sm">{t('enterpriseShowcase.socDesc')}</p>
         </div>
       </div>
@@ -721,6 +736,7 @@ const EnterpriseShowcase = () => (
       <div className="text-center mt-12">
         <a
           href="#enterprise"
+          aria-label="Talk to sales about Enterprise plans"
           className="inline-flex items-center gap-2 bg-wm-green text-wm-bg px-8 py-3 rounded-sm font-mono text-sm uppercase tracking-wider font-bold hover:bg-green-400 transition-colors"
         >
           {t('enterpriseShowcase.talkToSales')} <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -740,7 +756,7 @@ const PricingTable = () => {
     { feature: t('pricingTable.delivery'), free: "\u2014", pro: t('pricingTable.fSlackTgWa'), api: t('pricingTable.fWebhook'), ent: t('pricingTable.fSiemMcp') },
     { feature: t('pricingTable.apiRow'), free: "\u2014", pro: "\u2014", api: t('pricingTable.fRestWebhook'), ent: t('pricingTable.fMcpBulk') },
     { feature: t('pricingTable.infraLayers'), free: t('pricingTable.f45'), pro: t('pricingTable.f45'), api: "\u2014", ent: t('pricingTable.fTensOfThousands') },
-    { feature: t('pricingTable.satellite'), free: "\u2014", pro: "\u2014", api: "\u2014", ent: t('pricingTable.fImagerySar') },
+    { feature: t('pricingTable.satellite'), free: t('pricingTable.fLiveTracking'), pro: t('pricingTable.fPassAlerts'), api: "\u2014", ent: t('pricingTable.fImagerySar') },
     { feature: t('pricingTable.connectorsRow'), free: "\u2014", pro: "\u2014", api: "\u2014", ent: t('pricingTable.f100plus') },
     { feature: t('pricingTable.deployment'), free: t('pricingTable.fCloud'), pro: t('pricingTable.fCloud'), api: t('pricingTable.fCloud'), ent: t('pricingTable.fCloudOnPrem') },
     { feature: t('pricingTable.securityRow'), free: t('pricingTable.fStandard'), pro: t('pricingTable.fStandard'), api: t('pricingTable.fKeyAuth'), ent: t('pricingTable.fSsoMfa') },
@@ -860,9 +876,9 @@ const Footer = () => (
         <Logo />
       </div>
       <div className="flex gap-6">
-        <a href="https://x.com/eliehabib" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">X</a>
-        <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">GitHub</a>
-        <a href="https://www.wired.me/story/the-music-streaming-ceo-who-built-a-global-war-map" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">{t('footer.wiredArticle')}</a>
+        <a href="https://x.com/worldmonitorai" target="_blank" rel="noreferrer" aria-label="Follow World Monitor on X" className="hover:text-wm-text transition-colors">X</a>
+        <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noreferrer" aria-label="World Monitor on GitHub" className="hover:text-wm-text transition-colors">GitHub</a>
+        <a href="https://www.wired.me/story/the-music-streaming-ceo-who-built-a-global-war-map" target="_blank" rel="noreferrer" aria-label="Read the WIRED article about World Monitor" className="hover:text-wm-text transition-colors">{t('footer.wiredArticle')}</a>
       </div>
     </div>
   </footer>
@@ -892,7 +908,7 @@ const EnterprisePage = () => (
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-wm-border bg-wm-card text-wm-muted text-xs font-mono mb-6">
             {t('enterpriseShowcase.enterpriseTier')}
           </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">{t('enterpriseShowcase.title')}</h1>
+          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">{t('enterpriseShowcase.title')}</h2>
           <p className="text-lg text-wm-muted max-w-2xl mx-auto mb-10">
             {t('enterpriseShowcase.subtitle')}
           </p>
@@ -905,37 +921,38 @@ const EnterprisePage = () => (
       {/* Features grid */}
       <section className="py-24 px-6" id="features">
         <div className="max-w-7xl mx-auto">
+          <h2 className="sr-only">Enterprise Features</h2>
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             <div className="bg-wm-card border border-wm-border p-6">
               <ShieldAlert className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.security')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.security')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.securityDesc')}</p>
             </div>
             <div className="bg-wm-card border border-wm-border p-6">
               <Cpu className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.aiAgents')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.aiAgents')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.aiAgentsDesc')}</p>
             </div>
             <div className="bg-wm-card border border-wm-border p-6">
               <Layers className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.dataLayers')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.dataLayers')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.dataLayersDesc')}</p>
             </div>
           </div>
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="bg-wm-card border border-wm-border p-6">
               <Plug className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.connectors')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.connectors')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.connectorsDesc')}</p>
             </div>
             <div className="bg-wm-card border border-wm-border p-6">
               <PanelTop className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.whiteLabel')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.whiteLabel')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.whiteLabelDesc')}</p>
             </div>
             <div className="bg-wm-card border border-wm-border p-6">
               <BarChart3 className="w-8 h-8 text-wm-muted mb-4" aria-hidden="true" />
-              <h4 className="font-bold mb-2">{t('enterpriseShowcase.financial')}</h4>
+              <h3 className="font-bold mb-2">{t('enterpriseShowcase.financial')}</h3>
               <p className="text-sm text-wm-muted">{t('enterpriseShowcase.financialDesc')}</p>
             </div>
           </div>
@@ -948,19 +965,19 @@ const EnterprisePage = () => (
           <h2 className="text-3xl font-display font-bold mb-12 text-center">{t('enterpriseShowcase.title')}</h2>
           <div className="data-grid">
             <div className="data-cell">
-              <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.commodity')}</h5>
+              <h3 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.commodity')}</h3>
               <p className="text-sm">{t('enterpriseShowcase.commodityDesc')}</p>
             </div>
             <div className="data-cell">
-              <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.government')}</h5>
+              <h3 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.government')}</h3>
               <p className="text-sm">{t('enterpriseShowcase.governmentDesc')}</p>
             </div>
             <div className="data-cell">
-              <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.risk')}</h5>
+              <h3 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.risk')}</h3>
               <p className="text-sm">{t('enterpriseShowcase.riskDesc')}</p>
             </div>
             <div className="data-cell">
-              <h5 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.soc')}</h5>
+              <h3 className="font-mono text-xs text-wm-muted uppercase tracking-widest mb-2">{t('enterpriseShowcase.soc')}</h3>
               <p className="text-sm">{t('enterpriseShowcase.socDesc')}</p>
             </div>
           </div>
@@ -1034,7 +1051,7 @@ const EnterprisePage = () => (
         </div>
         <div className="flex gap-6">
           <a href="#" onClick={(e) => { e.preventDefault(); window.location.hash = ''; }} className="hover:text-wm-text transition-colors">{t('nav.pro')}</a>
-          <a href="https://x.com/eliehabib" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">X</a>
+          <a href="https://x.com/worldmonitorai" target="_blank" rel="noreferrer" aria-label="Follow World Monitor on X" className="hover:text-wm-text transition-colors">X</a>
           <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">GitHub</a>
         </div>
       </div>

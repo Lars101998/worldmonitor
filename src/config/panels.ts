@@ -65,6 +65,7 @@ const FULL_PANELS: Record<string, PanelConfig> = {
 const FULL_MAP_LAYERS: MapLayers = {
   iranAttacks: _desktop ? false : true,
   gpsJamming: false,
+  satellites: false,
 
   conflicts: true,
   bases: _desktop ? false : true,
@@ -122,6 +123,7 @@ const FULL_MAP_LAYERS: MapLayers = {
 const FULL_MOBILE_MAP_LAYERS: MapLayers = {
   iranAttacks: true,
   gpsJamming: false,
+  satellites: false,
 
   conflicts: true,
   bases: false,
@@ -220,6 +222,7 @@ const TECH_PANELS: Record<string, PanelConfig> = {
 
 const TECH_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -230,8 +233,8 @@ const TECH_MAP_LAYERS: MapLayers = {
   nuclear: false,
   irradiators: false,
   sanctions: false,
-  weather: true,
-  economic: true,
+  weather: false,
+  economic: false,
   waterways: false,
   outages: true,
   cyberThreats: false,
@@ -277,6 +280,7 @@ const TECH_MAP_LAYERS: MapLayers = {
 
 const TECH_MOBILE_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -377,6 +381,7 @@ const FINANCE_PANELS: Record<string, PanelConfig> = {
 
 const FINANCE_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -434,6 +439,7 @@ const FINANCE_MAP_LAYERS: MapLayers = {
 
 const FINANCE_MOBILE_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -507,6 +513,7 @@ const HAPPY_PANELS: Record<string, PanelConfig> = {
 
 const HAPPY_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -564,6 +571,7 @@ const HAPPY_MAP_LAYERS: MapLayers = {
 
 const HAPPY_MOBILE_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
@@ -652,13 +660,14 @@ const COMMODITY_PANELS: Record<string, PanelConfig> = {
 
 const COMMODITY_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,
-  cables: true,
+  cables: false,
   pipelines: true,
   hotspots: false,
-  ais: true,            // Commodity shipping, tanker routes, bulk carriers
+  ais: true,
   nuclear: false,
   irradiators: false,
   sanctions: true,
@@ -674,7 +683,7 @@ const COMMODITY_MAP_LAYERS: MapLayers = {
   natural: true,
   spaceports: false,
   minerals: true,
-  fires: true,          // Fires near mining/forestry operations
+  fires: true,
   // Data source layers
   ucdpEvents: false,
   displacement: false,
@@ -709,6 +718,7 @@ const COMMODITY_MAP_LAYERS: MapLayers = {
 
 const COMMODITY_MOBILE_MAP_LAYERS: MapLayers = {
   gpsJamming: false,
+  satellites: false,
 
   conflicts: false,
   bases: false,

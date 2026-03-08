@@ -18,6 +18,7 @@ AI-powered real-time global intelligence dashboard aggregating news, markets, ge
 | [Finance Data](./FINANCE_DATA.md) | Market radar, Gulf FDI, stablecoins, BIS, WTO |
 | [Premium Finance](./PREMIUM_FINANCE.md) | Premium stock analysis, stored history, backtests, daily brief |
 | [Premium Finance Search Layer](./PREMIUM_FINANCE_SEARCH.md) | Targeted stock-news provider chain layered on top of premium finance |
+| [Orbital Surveillance](./ORBITAL_SURVEILLANCE.md) | Satellite tracking, SGP4 propagation, tier availability, roadmap |
 | [API Reference](./api/) | OpenAPI specs for all 22 services |
 | [Adding Endpoints](./ADDING_ENDPOINTS.md) | Guide for adding new RPC endpoints |
 | [Release Packaging](./RELEASE_PACKAGING.md) | Desktop build and release process |
