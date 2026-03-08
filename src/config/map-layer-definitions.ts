@@ -84,8 +84,8 @@ const VARIANT_LAYER_ORDER: Record<MapVariant, Array<keyof MapLayers>> = {
     'ais', 'tradeRoutes', 'flights', 'protests',
     'ucdpEvents', 'displacement', 'climate', 'weather',
     'outages', 'cyberThreats', 'natural', 'fires',
-    'waterways', 'economic', 'minerals', 'gpsJamming',
-    'ciiChoropleth', 'dayNight',
+    'waterways', 'economic', 'minerals', 'sanctions',
+    'gpsJamming', 'ciiChoropleth', 'dayNight',
   ],
   tech: [
     'startupHubs', 'techHQs', 'accelerators', 'cloudRegions',
@@ -95,7 +95,7 @@ const VARIANT_LAYER_ORDER: Record<MapVariant, Array<keyof MapLayers>> = {
   finance: [
     'stockExchanges', 'financialCenters', 'centralBanks', 'commodityHubs',
     'gulfInvestments', 'tradeRoutes', 'cables', 'pipelines',
-    'outages', 'weather', 'economic', 'waterways',
+    'sanctions', 'outages', 'weather', 'economic', 'waterways',
     'natural', 'cyberThreats', 'dayNight',
   ],
   happy: [
@@ -105,6 +105,7 @@ const VARIANT_LAYER_ORDER: Record<MapVariant, Array<keyof MapLayers>> = {
   commodity: [
     'miningSites', 'processingPlants', 'commodityPorts', 'commodityHubs',
     'minerals', 'pipelines', 'waterways', 'tradeRoutes',
+    'ais', 'sanctions', 'economic', 'fires', 'climate',
     'natural', 'weather', 'outages', 'dayNight',
   ],
 };
@@ -116,6 +117,19 @@ export function getLayersForVariant(variant: MapVariant, renderer: MapRenderer):
   return keys
     .map(k => LAYER_REGISTRY[k])
     .filter(d => d.renderers.includes(renderer));
+}
+
+export function getAllowedLayerKeys(variant: MapVariant): Set<keyof MapLayers> {
+  return new Set(VARIANT_LAYER_ORDER[variant] ?? VARIANT_LAYER_ORDER.full);
+}
+
+export function sanitizeLayersForVariant(layers: MapLayers, variant: MapVariant): MapLayers {
+  const allowed = getAllowedLayerKeys(variant);
+  const sanitized = { ...layers };
+  for (const key of Object.keys(sanitized) as Array<keyof MapLayers>) {
+    if (!allowed.has(key)) sanitized[key] = false;
+  }
+  return sanitized;
 }
 
 export function resolveLayerLabel(def: LayerDefinition, tFn?: (key: string) => string): string {

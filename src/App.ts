@@ -8,6 +8,8 @@ import {
   STORAGE_KEYS,
   SITE_VARIANT,
 } from '@/config';
+import { sanitizeLayersForVariant } from '@/config/map-layer-definitions';
+import type { MapVariant } from '@/config/map-layer-definitions';
 import { initDB, cleanOldSnapshots, isAisConfigured, initAisStream, isOutagesConfigured, disconnectAisStream } from '@/services';
 import { mlWorker } from '@/services/ml-worker';
 import { getAiFlowSettings, subscribeAiFlowChange, isHeadlineMemoryEnabled } from '@/services/ai-flow-settings';
@@ -91,15 +93,13 @@ export class App {
       localStorage.removeItem(PANEL_ORDER_KEY + '-bottom');
       localStorage.removeItem(PANEL_ORDER_KEY + '-bottom-set');
       localStorage.removeItem(PANEL_SPANS_KEY);
-      mapLayers = { ...defaultLayers };
+      mapLayers = sanitizeLayersForVariant({ ...defaultLayers }, currentVariant as MapVariant);
       panelSettings = { ...DEFAULT_PANELS };
     } else {
-      mapLayers = loadFromStorage<MapLayers>(STORAGE_KEYS.mapLayers, defaultLayers);
-      // Happy variant: force non-happy layers off even if localStorage has stale true values
-      if (currentVariant === 'happy') {
-        const unhappyLayers: (keyof MapLayers)[] = ['conflicts', 'bases', 'hotspots', 'nuclear', 'irradiators', 'sanctions', 'military', 'protests', 'pipelines', 'waterways', 'ais', 'flights', 'spaceports', 'minerals', 'natural', 'fires', 'outages', 'cyberThreats', 'weather', 'economic', 'cables', 'datacenters', 'ucdpEvents', 'displacement', 'climate', 'iranAttacks'];
-        unhappyLayers.forEach(layer => { mapLayers[layer] = false; });
-      }
+      mapLayers = sanitizeLayersForVariant(
+        loadFromStorage<MapLayers>(STORAGE_KEYS.mapLayers, defaultLayers),
+        currentVariant as MapVariant,
+      );
       panelSettings = loadFromStorage<Record<string, PanelConfig>>(
         STORAGE_KEYS.panels,
         DEFAULT_PANELS

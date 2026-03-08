@@ -1,0 +1,76 @@
+/**
+ * Guardrail: every layer enabled by default in a variant's MapLayers
+ * MUST have a corresponding entry in VARIANT_LAYER_ORDER so users can toggle it.
+ *
+ * Without this, layers render but have no UI toggle → users can't turn them off.
+ */
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+const SRC = new URL('../src/config/', import.meta.url);
+
+const layerDefsSource = readFileSync(new URL('map-layer-definitions.ts', SRC), 'utf8');
+const panelsSource = readFileSync(new URL('panels.ts', SRC), 'utf8');
+
+function extractVariantLayerOrder(source) {
+  const match = source.match(/VARIANT_LAYER_ORDER[^=]*=\s*\{([\s\S]*?)\n\};/);
+  if (!match) throw new Error('Could not find VARIANT_LAYER_ORDER');
+  const body = match[1];
+  const result = {};
+  const variantRe = /(\w+):\s*\[([\s\S]*?)\]/g;
+  let m;
+  while ((m = variantRe.exec(body)) !== null) {
+    const keys = m[2].match(/'(\w+)'/g)?.map(s => s.replace(/'/g, '')) ?? [];
+    result[m[1]] = new Set(keys);
+  }
+  return result;
+}
+
+function extractEnabledLayers(source, constName) {
+  const re = new RegExp(`const ${constName}[^=]*=\\s*\\{([\\s\\S]*?)\\};`);
+  const match = source.match(re);
+  if (!match) throw new Error(`Could not find ${constName}`);
+  const enabled = [];
+  const lineRe = /(\w+):\s*true/g;
+  let m;
+  while ((m = lineRe.exec(match[1])) !== null) {
+    enabled.push(m[1]);
+  }
+  return enabled;
+}
+
+const variantOrder = extractVariantLayerOrder(layerDefsSource);
+
+const VARIANT_DEFAULTS = {
+  full:      { desktop: 'FULL_MAP_LAYERS',      mobile: 'FULL_MOBILE_MAP_LAYERS' },
+  tech:      { desktop: 'TECH_MAP_LAYERS',      mobile: 'TECH_MOBILE_MAP_LAYERS' },
+  finance:   { desktop: 'FINANCE_MAP_LAYERS',    mobile: 'FINANCE_MOBILE_MAP_LAYERS' },
+  happy:     { desktop: 'HAPPY_MAP_LAYERS',      mobile: 'HAPPY_MOBILE_MAP_LAYERS' },
+  commodity: { desktop: 'COMMODITY_MAP_LAYERS',  mobile: 'COMMODITY_MOBILE_MAP_LAYERS' },
+};
+
+describe('variant layer guardrail', () => {
+  for (const [variant, { desktop, mobile }] of Object.entries(VARIANT_DEFAULTS)) {
+    const allowed = variantOrder[variant];
+    if (!allowed) continue;
+
+    it(`${variant} desktop: no enabled layer without a toggle`, () => {
+      const enabled = extractEnabledLayers(panelsSource, desktop);
+      const orphans = enabled.filter(k => !allowed.has(k));
+      assert.deepStrictEqual(
+        orphans, [],
+        `${variant} desktop has layers enabled but NOT in VARIANT_LAYER_ORDER (no toggle to turn off): ${orphans.join(', ')}`,
+      );
+    });
+
+    it(`${variant} mobile: no enabled layer without a toggle`, () => {
+      const enabled = extractEnabledLayers(panelsSource, mobile);
+      const orphans = enabled.filter(k => !allowed.has(k));
+      assert.deepStrictEqual(
+        orphans, [],
+        `${variant} mobile has layers enabled but NOT in VARIANT_LAYER_ORDER (no toggle to turn off): ${orphans.join(', ')}`,
+      );
+    });
+  }
+});
