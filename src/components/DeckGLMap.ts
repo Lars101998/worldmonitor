@@ -4637,8 +4637,6 @@ export class DeckGLMap {
 
   private layerWarningShown = false;
 
-  private lastActiveLayerCount = 0;
-
   private enforceLayerLimit(): void {
     const WARN_THRESHOLD = 10;
     const togglesEl = this.container.querySelector('.deckgl-layer-toggles');
@@ -4646,9 +4644,7 @@ export class DeckGLMap {
     const activeCount = Array.from(togglesEl.querySelectorAll<HTMLInputElement>('.layer-toggle input'))
       .filter(i => (i.closest('.layer-toggle') as HTMLElement)?.style.display !== 'none')
       .filter(i => i.checked).length;
-    const increasing = activeCount > this.lastActiveLayerCount;
-    this.lastActiveLayerCount = activeCount;
-    if (activeCount >= WARN_THRESHOLD && increasing && !this.layerWarningShown) {
+    if (activeCount >= WARN_THRESHOLD && !this.layerWarningShown) {
       this.layerWarningShown = true;
       showLayerWarning(WARN_THRESHOLD);
     } else if (activeCount < WARN_THRESHOLD) {
